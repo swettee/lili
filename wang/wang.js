@@ -5,6 +5,11 @@ const startBtn = document.getElementById("startBtn");
 startBtn.addEventListener("click", function () {
     // 模拟游戏开始
     alert("游戏开始啦！");
+const startBtn = document.getElementById("startBtn");
+startBtn.addEventListener("click", function () {
+    console.log("按钮点击事件绑定成功");
+    // 模拟游戏开始等逻辑
+});
 
     // 模拟击败小兵进度增加
     const progressBar = document.getElementById("progress-bar");
