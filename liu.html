@@ -63,13 +63,16 @@
     </div>
 
     <script>
-        document.getElementById('revealButton').addEventListener('click', function () {
+        document.addEventListener("DOMContentLoaded", function () {
+            var revealButton = document.getElementById('revealButton');
             var revealContent = document.getElementById('revealContent');
-            if (revealContent.style.display === 'none') {
-                revealContent.style.display = 'block';
-            } else {
-                revealContent.style.display = 'none';
-            }
+            revealButton.addEventListener('click', function () {
+                if (revealContent.style.display === 'none') {
+                    revealContent.style.display = 'block';
+                } else {
+                    revealContent.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
