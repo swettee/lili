@@ -7,6 +7,8 @@
     <title>MIDI Player</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <!-- 引入 midi-js 库 -->
+    <script src="https://cdn.jsdelivr.net/npm/midi-js@latest/midi.js"></script>
 </head>
 
 <body class="bg-gray-100 flex flex-col items-center justify-center h-screen">
@@ -15,28 +17,17 @@
     <script>
         const playButton = document.getElementById('playButton');
 
-        playButton.addEventListener('click', async () => {
-            try {
-                const midiAccess = await navigator.requestMIDIAccess();
-                const output = midiAccess.outputs.values().next().value;
-
-                if (!output) {
-                    console.log('No MIDI output device found.');
-                    return;
+        playButton.addEventListener('click', () => {
+            MIDI.loadPlugin({
+                soundfontUrl: "./soundfont/",
+                instrument: "acoustic_grand_piano",
+                onsuccess: function () {
+                    // 替换为你实际的 MIDI 文件名
+                    MIDI.Player.loadFile('new_music.mid', function () {
+                        MIDI.Player.start();
+                    });
                 }
-
-                // 替换为你实际的 MIDI 文件名
-                const response = await fetch('new_music.mid'); 
-                const arrayBuffer = await response.arrayBuffer();
-                const midiData = new Uint8Array(arrayBuffer);
-
-                for (let i = 0; i < midiData.length; i++) {
-                    output.send([midiData[i]]);
-                }
-
-            } catch (error) {
-                console.error('Error playing MIDI:', error);
-            }
+            });
         });
     </script>
 </body>
