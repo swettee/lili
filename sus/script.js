@@ -10,7 +10,7 @@ const title = document.getElementById("title")
 const musicCover = document.getElementById("music-cover")
 
 // 音乐信息
-const songs = ["打上花火", "Mojito", "Super_Star", "离人"]
+const songs = ["den", "Mojito", "Super_Star", "离人"]
 // 默认从第一首开始
 let songIndex = 0;
 // 将歌曲细节加载到DOM
@@ -18,8 +18,8 @@ loadSong(songs[songIndex])
 // 更新歌曲细节
 function loadSong(song) {
     title.innerHTML = song
-    audio.src = `assets/music/${song}.mp3`;      // 路径为 music/打上花火.mp3
-    musicCover.src = `assets/img/${song}.jpg`;
+    audio.src = `untitled.mp3`;      // 路径为 music/打上花火.mp3
+    musicCover.src = `打上花火.jpg`;
 }
 
 // 播放歌曲
