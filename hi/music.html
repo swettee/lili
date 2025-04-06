@@ -4,42 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Page</title>
+    <title>MIDI Player</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .audio-container {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
-
-        audio {
-            width: 100%;
-            margin-top: 1rem;
-        }
-    </style>
 </head>
 
-<body>
-    <div class="audio-container">
-        <h1 class="text-2xl font-bold text-center">Listen to the Music</h1>
-        <audio controls>
-            <source src="new_music.mid" type="audio/midi">
-            Your browser does not support the audio element.
-        </audio>
-    </div>
+<body class="bg-gray-100 flex flex-col items-center justify-center h-screen">
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">MIDI Music Player</h1>
+    <button id="playButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play MIDI</button>
+    <script>
+        const playButton = document.getElementById('playButton');
+
+        playButton.addEventListener('click', async () => {
+            try {
+                const midiAccess = await navigator.requestMIDIAccess();
+                const output = midiAccess.outputs.values().next().value;
+
+                if (!output) {
+                    console.log('No MIDI output device found.');
+                    return;
+                }
+
+                // 替换为你实际的 MIDI 文件名
+                const response = await fetch('new_music.mid'); 
+                const arrayBuffer = await response.arrayBuffer();
+                const midiData = new Uint8Array(arrayBuffer);
+
+                for (let i = 0; i < midiData.length; i++) {
+                    output.send([midiData[i]]);
+                }
+
+            } catch (error) {
+                console.error('Error playing MIDI:', error);
+            }
+        });
+    </script>
 </body>
 
 </html>
+    
